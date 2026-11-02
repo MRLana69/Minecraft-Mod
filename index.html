@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Subway Surfers — Transilvânia</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111}#unity-container{width:100%;height:100%;position:relative}#unity-canvas{width:100%;height:100%;display:block;background:#111}#loading{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:16px system-ui,sans-serif;pointer-events:none}#loading>div{width:min(520px,82vw);text-align:center}#bar{height:10px;margin-top:12px;border-radius:8px;background:#333;overflow:hidden}#progress{height:100%;width:0;background:#ff4d68;transition:width .15s linear}#error{display:none;color:#ff9aa8;white-space:pre-wrap}</style>
+</head>
+<body><main id="unity-container"><canvas id="unity-canvas" tabindex="0" aria-label="Subway Surfers Transilvânia"></canvas><div id="loading"><div><strong>Transilvânia</strong><div id="status">Preparando o mapa...</div><div id="bar"><div id="progress"></div></div><p id="error"></p></div></div></main>
+<script src="reborn-runtime.js"></script>
+<script>
+(async()=>{
+ const status=document.getElementById('status'),bar=document.getElementById('progress'),err=document.getElementById('error');
+ const fail=e=>{status.textContent='Falha ao carregar';err.style.display='block';err.textContent=String(e?.stack||e)};
+ try {
+  const manifest=await fetch('reborn.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('reborn.json HTTP '+r.status);return r.json()});
+  const compat=AshuniRebornRuntime.create(manifest,location.href);
+  const urls={framework:compat.assetUrl(manifest.frameworkUrl),loader:compat.assetUrl(manifest.loaderUrl),data:compat.assetUrl(manifest.dataUrl),code:compat.assetUrl(manifest.codeUrl)};
+  window.__TAVVKKJ_REBORN_LAUNCH__={authorized:true,buildId:manifest.buildId,contentSlug:manifest.mapSlug,slug:manifest.mapSlug,mode:compat.mode,rank:{emit(){}},activate:async nonce=>({unityNonce:nonce,buildId:manifest.buildId,slug:manifest.mapSlug,contentSlug:manifest.mapSlug,routeSlug:manifest.mapSlug,mode:compat.mode,catalogUrl:compat.catalogUrl,contentHash:manifest.contentHash})};
+  const health={nativeLog:(s,t)=>console[t===0||t===1?'error':t===2?'warn':'log'](s),log:(t,s)=>console[t==='error'?'error':t==='warn'?'warn':'log'](s),print:s=>console.log(s),printErr:s=>console.error(s),getInternalformatParameter:(gl,target,format,pname)=>gl.getInternalformatParameter(target,format,pname),prepareAudio:()=>{},resumeAudio:(ctx)=>ctx?.resume?.(),pendingAudioMetadata:()=>{},persistenceNotice:()=>{}};
+  const original=await fetch(urls.framework,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('framework HTTP '+r.status);return r.text()});
+  const patched=compat.patchFramework(original);
+  const frameworkBlob=URL.createObjectURL(new Blob([patched],{type:'application/javascript'}));
+  const loader=await fetch(urls.loader,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('loader HTTP '+r.status);return r.text()});
+  await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=URL.createObjectURL(new Blob([loader],{type:'application/javascript'}));s.onload=resolve;s.onerror=()=>reject(Error('loader não carregou'));document.head.appendChild(s)});
+  if(typeof createUnityInstance!=='function')throw Error('createUnityInstance ausente');
+  const config={dataUrl:urls.data,frameworkUrl:frameworkBlob,codeUrl:urls.code,streamingAssetsUrl:compat.assetUrl(manifest.streamingAssetsUrl),ashuniResolveAssetUrl:compat.resolveRequest,ashuniRuntimeHealth:health,companyName:manifest.companyName,productName:manifest.productName,productVersion:manifest.productVersion,showBanner:false};
+  const inst=await createUnityInstance(document.getElementById('unity-canvas'),config,v=>{const p=Math.round(v*100);bar.style.width=p+'%';status.textContent='Carregando arquivos... '+p+'%'});
+  window.unityInstance=inst;document.getElementById('loading').style.display='none';
+ } catch(e){fail(e)}
+})();
+</script></body></html>

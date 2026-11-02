@@ -1,0 +1,21 @@
+{
+  "id": "transylvania-enhanced",
+  "buildId": "reborn-shared-enhanced-local-20260907t045830z",
+  "buildVersion": "enhanced-local-20260907t045830z",
+  "mapSlug": "transylvania",
+  "mode": "original",
+  "modes": [
+    "original",
+    "training"
+  ],
+  "productName": "Transylvania | Ashuni",
+  "productVersion": "1.62",
+  "companyName": "Ashuni",
+  "dataUrl": "/Build/space-station-reborn/Build/reborn-shared.data",
+  "frameworkUrl": "/Build/space-station-reborn/Build/reborn-shared.framework.js",
+  "codeUrl": "/Build/space-station-reborn/Build/reborn-shared.local-v4.wasm",
+  "loaderUrl": "/Build/space-station-reborn/Build/reborn-shared.loader.js",
+  "streamingAssetsUrl": "/Build/space-station-reborn/StreamingAssets",
+  "catalogUrl": "/Build/transylvania-enhanced/content/catalog_transylvania-unified-enhanced-local-20260907t045830z.bin",
+  "contentHash": "transylvania-unified-enhanced-local-20260907t045830z"
+}
